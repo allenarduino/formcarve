@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -72,12 +72,20 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
     const [fields, setFields] = useState<FormField[]>(getInitialFields());
     const [selectedField, setSelectedField] = useState<FormField | null>(null);
     const [showFieldTypes, setShowFieldTypes] = useState(false);
+    const isInitialMount = useRef(true);
 
     // Update internal fields state when initialFields prop changes
     // This is important if `initialFields` comes from an async source or parent state
     useEffect(() => {
-        setFields(getInitialFields());
-    }, [initialFields, getInitialFields]);
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return; // Skip the first render to avoid calling onFieldsChange during initial mount
+        }
+
+        const newFields = getInitialFields();
+        setFields(newFields);
+        onFieldsChange?.(newFields);
+    }, [initialFields]);
 
     const generateFieldId = () => `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
@@ -130,7 +138,10 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
 
         setFields(prev => {
             const newFields = [...prev, newField];
-            onFieldsChange?.(newFields); // Notify parent of changes
+            // Use setTimeout to avoid calling onFieldsChange during render
+            setTimeout(() => {
+                onFieldsChange?.(newFields);
+            }, 0);
             return newFields;
         });
         setSelectedField(newField); // Select the newly added field
@@ -142,7 +153,10 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
             const newFields = prev.map(field =>
                 field.id === fieldId ? { ...field, ...updates } : field
             );
-            onFieldsChange?.(newFields); // Notify parent of changes
+            // Use setTimeout to avoid calling onFieldsChange during render
+            setTimeout(() => {
+                onFieldsChange?.(newFields);
+            }, 0);
             return newFields;
         });
 
@@ -161,7 +175,10 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
             }
 
             const newFields = prev.filter(field => field.id !== fieldId);
-            onFieldsChange?.(newFields); // Notify parent of changes
+            // Use setTimeout to avoid calling onFieldsChange during render
+            setTimeout(() => {
+                onFieldsChange?.(newFields);
+            }, 0);
             return newFields;
         });
         if (selectedField?.id === fieldId) {
@@ -177,7 +194,10 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
         items.splice(result.destination.index, 0, reorderedItem);
 
         setFields(items);
-        onFieldsChange?.(items); // Notify parent of reordered fields
+        // Use setTimeout to avoid calling onFieldsChange during render
+        setTimeout(() => {
+            onFieldsChange?.(items);
+        }, 0);
     }, [fields, onFieldsChange]);
 
     const renderFieldPreview = (field: FormField) => {
