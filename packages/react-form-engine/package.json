@@ -1,0 +1,34 @@
+{
+  "name": "@jonesstack/react-form-engine",
+  "version": "0.1.0",
+  "description": "A dynamic, schema-based form rendering engine for React applications.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "react",
+    "forms",
+    "form-builder",
+    "schema-driven-forms",
+    "typescript"
+  ],
+  "author": "Allen Jones",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

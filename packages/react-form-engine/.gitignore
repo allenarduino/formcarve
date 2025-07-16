@@ -1,0 +1,12 @@
+# .gitignore for packages/react-form-engine/
+
+# Node modules (pnpm workspace handles this mostly at root, but good practice)
+node_modules/
+
+# Build output from TypeScript
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+.pnpm-debug.log*

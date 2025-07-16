@@ -1,0 +1,53 @@
+# .gitignore for the monorepo root (formcarve/)
+
+# Node modules
+node_modules/
+.pnpm-store/ # pnpm's global content-addressable store (usually outside repo, but good to explicitly ignore if it ends up here)
+.pnpm/       # pnpm's symlinks within node_modules
+
+# Build artifacts
+dist/
+.next/
+out/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# VSCode temp files
+.vscode-test/
+
+# pnpm-lock.yaml is typically committed, but if you have a custom setup, you might ignore it
+# pnpm-lock.yaml
+
+# Next.js specific build output (redundant if .next/ is above but good to be explicit)
+.next/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Playwright
+test-results/
+
+# macOS
+.DS_Store
+
+# Thumbs.db
+Thumbs.db
