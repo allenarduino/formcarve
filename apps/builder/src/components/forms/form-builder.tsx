@@ -366,7 +366,7 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
                         Field Properties
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 max-h-[70vh] overflow-y-auto">
                     {/* Basic Properties */}
                     <div className="space-y-2">
                         <Label>{selectedField.type === 'submit-button' ? 'Button Text' : 'Label'}</Label>
