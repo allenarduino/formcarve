@@ -21,7 +21,7 @@ interface FormPreviewModalProps {
 const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const validateField = (field: FormField, value: any): string | null => {
+    const validateField = (field: FormField, value: string | number | boolean | null): string | null => {
         // Required validation
         if (field.required && (!value || value.toString().trim() === '')) {
             return field.validation?.customMessage || `${field.label} is required`;
@@ -40,14 +40,14 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
 
         // Min/Max value validation for numbers
         if (field.type === 'number' && field.validation?.min !== undefined) {
-            const numValue = parseFloat(value);
+            const numValue = parseFloat(value.toString());
             if (isNaN(numValue) || numValue < field.validation.min) {
                 return field.validation?.customMessage || `${field.label} must be at least ${field.validation.min}`;
             }
         }
 
         if (field.type === 'number' && field.validation?.max !== undefined) {
-            const numValue = parseFloat(value);
+            const numValue = parseFloat(value.toString());
             if (isNaN(numValue) || numValue > field.validation.max) {
                 return field.validation?.customMessage || `${field.label} must be no more than ${field.validation.max}`;
             }
@@ -64,7 +64,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
         return null;
     };
 
-    const handleInputChange = (fieldId: string, value: any, field: FormField) => {
+    const handleInputChange = (fieldId: string, value: string | number | boolean, field: FormField) => {
         const error = validateField(field, value);
         setErrors((prev: Record<string, string>) => ({
             ...prev,
@@ -83,13 +83,14 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
             if (field.type === 'submit-button') return;
 
             const value = formData.get(field.id);
-            const error = validateField(field, value);
+            const stringValue = value ? value.toString() : '';
+            const error = validateField(field, stringValue);
 
             if (error) {
                 newErrors[field.id] = error;
             }
 
-            data[field.id] = value;
+            data[field.id] = stringValue;
         });
 
         setErrors(newErrors);

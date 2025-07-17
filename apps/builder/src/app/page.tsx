@@ -11,7 +11,7 @@ import FormPreviewModal from "@/components/forms/form-preview-modal";
 import { FormField } from "@jonesstack/react-form-engine";
 
 export default function FormBuilderPage() {
-    const [form, setForm] = useState<any>({ id: "new-form-1", name: "My First FormCarve Form" });
+    const [form] = useState<{ id: string; name: string }>({ id: "new-form-1", name: "My First FormCarve Form" });
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
