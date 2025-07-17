@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Save, Eye, ExternalLink, Code, Download } from "lucide-react";
 import { toast } from "sonner";
 import FormBuilder from "@/components/forms/form-builder";
+import FormPreviewModal from "@/components/forms/form-preview-modal";
 import { FormField } from "@jonesstack/react-form-engine";
 
 export default function FormBuilderPage() {
@@ -149,7 +150,13 @@ export default function FormBuilderPage() {
                 />
             </div>
 
-
+            {/* Preview Modal */}
+            <FormPreviewModal
+                isOpen={showPreview}
+                onClose={() => setShowPreview(false)}
+                fields={currentFields}
+                formName={form?.name}
+            />
         </div>
     );
 }
