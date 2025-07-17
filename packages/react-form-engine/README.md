@@ -2,7 +2,7 @@
 
 A dynamic, schema-based form rendering engine for React applications. Design forms visually using the FormCarve builder, export the JSON schema, and render them with full validation support.
 
-![FormCarve Builder Interface](https://github.com/allenarduino/formcarve/demo-screenshots/demo-screenshot1.png)
+![FormCarve Builder Interface](https://github.com/allenarduino/formcarve/blob/main/demo-screenshots/demo-screenshot1.png)
 
 *The FormCarve Builder provides an intuitive drag-and-drop interface for creating forms with real-time preview, validation rules, and styling options.*
 
