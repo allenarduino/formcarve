@@ -14,7 +14,14 @@ export interface FormField {
     validation?: {
         minLength?: number; // Minimum length for text/number inputs
         maxLength?: number; // Maximum length for text/number inputs
-        pattern?: string;   // Regex pattern for validation (e.g., for email)
+        min?: number; // Minimum value for number inputs
+        max?: number; // Maximum value for number inputs
+        pattern?: string; // Regex pattern for validation (e.g., for email)
+        customMessage?: string; // Custom error message
+        email?: boolean; // Email validation
+        url?: boolean; // URL validation
+        phone?: boolean; // Phone validation
+        required?: boolean; // Required field validation (redundant with field.required but more explicit)
     };
     styling?: {
         borderRadius?: number;

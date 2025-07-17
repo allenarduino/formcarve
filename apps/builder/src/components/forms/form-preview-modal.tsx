@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
@@ -18,18 +19,88 @@ interface FormPreviewModalProps {
  * These inputs are fully functional for testing the form.
  */
 const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) => {
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
+    const validateField = (field: FormField, value: any): string | null => {
+        // Required validation
+        if (field.required && (!value || value.toString().trim() === '')) {
+            return field.validation?.customMessage || `${field.label} is required`;
+        }
+
+        if (!value || value.toString().trim() === '') return null; // Skip other validations if empty
+
+        // Min/Max length validation
+        if (field.validation?.minLength && value.toString().length < field.validation.minLength) {
+            return field.validation?.customMessage || `${field.label} must be at least ${field.validation.minLength} characters`;
+        }
+
+        if (field.validation?.maxLength && value.toString().length > field.validation.maxLength) {
+            return field.validation?.customMessage || `${field.label} must be no more than ${field.validation.maxLength} characters`;
+        }
+
+        // Min/Max value validation for numbers
+        if (field.type === 'number' && field.validation?.min !== undefined) {
+            const numValue = parseFloat(value);
+            if (isNaN(numValue) || numValue < field.validation.min) {
+                return field.validation?.customMessage || `${field.label} must be at least ${field.validation.min}`;
+            }
+        }
+
+        if (field.type === 'number' && field.validation?.max !== undefined) {
+            const numValue = parseFloat(value);
+            if (isNaN(numValue) || numValue > field.validation.max) {
+                return field.validation?.customMessage || `${field.label} must be no more than ${field.validation.max}`;
+            }
+        }
+
+        // Pattern validation
+        if (field.validation?.pattern) {
+            const regex = new RegExp(field.validation.pattern);
+            if (!regex.test(value.toString())) {
+                return field.validation?.customMessage || `${field.label} format is invalid`;
+            }
+        }
+
+        return null;
+    };
+
+    const handleInputChange = (fieldId: string, value: any, field: FormField) => {
+        const error = validateField(field, value);
+        setErrors((prev: Record<string, string>) => ({
+            ...prev,
+            [fieldId]: error || ''
+        }));
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const data: Record<string, any> = {};
+        const newErrors: Record<string, string> = {};
 
-        // Collect form data
-        for (const [key, value] of formData.entries()) {
-            data[key] = value;
+        // Validate all fields and collect data
+        fields.forEach(field => {
+            if (field.type === 'submit-button') return;
+
+            const value = formData.get(field.id);
+            const error = validateField(field, value);
+
+            if (error) {
+                newErrors[field.id] = error;
+            }
+
+            data[field.id] = value;
+        });
+
+        setErrors(newErrors);
+
+        // Only submit if no errors
+        if (Object.keys(newErrors).length === 0) {
+            console.log('Form submitted with data:', data);
+            alert('Form submitted successfully! Check console for data.');
+        } else {
+            alert('Please fix the validation errors before submitting.');
         }
-
-        console.log('Form submitted with data:', data);
-        alert('Form submitted! Check console for data.');
     };
 
     return (
@@ -62,9 +133,18 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                         type={field.type}
                                         name={field.id}
                                         placeholder={field.placeholder}
-                                        className="mt-1 block w-full rounded-md shadow-sm"
+                                        className={`mt-1 block w-full rounded-md shadow-sm ${errors[field.id] ? 'border-red-500' : ''}`}
                                         style={baseStyle}
+                                        onChange={(e) => handleInputChange(field.id, e.target.value, field)}
+                                        minLength={field.validation?.minLength}
+                                        maxLength={field.validation?.maxLength}
+                                        min={field.validation?.min}
+                                        max={field.validation?.max}
+                                        pattern={field.validation?.pattern}
                                     />
+                                    {errors[field.id] && (
+                                        <p className="mt-1 text-sm text-red-600">{errors[field.id]}</p>
+                                    )}
                                 </div>
                             );
                         case 'textarea':
@@ -77,9 +157,15 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                         name={field.id}
                                         placeholder={field.placeholder}
                                         rows={3}
-                                        className="mt-1 block w-full rounded-md shadow-sm"
+                                        className={`mt-1 block w-full rounded-md shadow-sm ${errors[field.id] ? 'border-red-500' : ''}`}
                                         style={baseStyle}
+                                        onChange={(e) => handleInputChange(field.id, e.target.value, field)}
+                                        minLength={field.validation?.minLength}
+                                        maxLength={field.validation?.maxLength}
                                     ></textarea>
+                                    {errors[field.id] && (
+                                        <p className="mt-1 text-sm text-red-600">{errors[field.id]}</p>
+                                    )}
                                 </div>
                             );
                         case 'select':
@@ -90,21 +176,33 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                     </label>
                                     <select
                                         name={field.id}
-                                        className="mt-1 block w-full rounded-md shadow-sm"
+                                        className={`mt-1 block w-full rounded-md shadow-sm ${errors[field.id] ? 'border-red-500' : ''}`}
                                         style={baseStyle}
+                                        onChange={(e) => handleInputChange(field.id, e.target.value, field)}
                                     >
                                         <option value="">{field.placeholder || "Select an option"}</option>
                                         {field.options?.map((option, idx) => (
                                             <option key={idx} value={option}>{option}</option>
                                         ))}
                                     </select>
+                                    {errors[field.id] && (
+                                        <p className="mt-1 text-sm text-red-600">{errors[field.id]}</p>
+                                    )}
                                 </div>
                             );
                         case 'checkbox':
                             return (
                                 <div key={field.id} className="mb-3 flex items-center">
-                                    <input type="checkbox" name={field.id} className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+                                    <input
+                                        type="checkbox"
+                                        name={field.id}
+                                        className={`h-4 w-4 text-blue-600 border-gray-300 rounded ${errors[field.id] ? 'border-red-500' : ''}`}
+                                        onChange={(e) => handleInputChange(field.id, e.target.checked, field)}
+                                    />
                                     <label className="ml-2 block text-sm text-gray-900">{field.label}</label>
+                                    {errors[field.id] && (
+                                        <p className="mt-1 text-sm text-red-600">{errors[field.id]}</p>
+                                    )}
                                 </div>
                             );
                         case 'radio':
@@ -116,11 +214,20 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                     <div className="space-y-2">
                                         {field.options?.map((option, idx) => (
                                             <div key={idx} className="flex items-center">
-                                                <input type="radio" name={field.id} value={option} className="h-4 w-4 text-blue-600 border-gray-300" />
+                                                <input
+                                                    type="radio"
+                                                    name={field.id}
+                                                    value={option}
+                                                    className={`h-4 w-4 text-blue-600 border-gray-300 ${errors[field.id] ? 'border-red-500' : ''}`}
+                                                    onChange={(e) => handleInputChange(field.id, e.target.value, field)}
+                                                />
                                                 <label className="ml-2 block text-sm text-gray-900">{option}</label>
                                             </div>
                                         ))}
                                     </div>
+                                    {errors[field.id] && (
+                                        <p className="mt-1 text-sm text-red-600">{errors[field.id]}</p>
+                                    )}
                                 </div>
                             );
                         case 'submit-button':

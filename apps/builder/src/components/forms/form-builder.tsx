@@ -440,6 +440,170 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
 
                     <Separator />
 
+                    {/* Validation Properties */}
+                    {selectedField.type !== 'submit-button' && (
+                        <>
+                            <div className="space-y-2">
+                                <Label className="flex items-center gap-2">
+                                    <CheckSquare className="h-4 w-4" />
+                                    Validation
+                                </Label>
+                            </div>
+
+                            {/* Min/Max Length for text fields */}
+                            {['text', 'email', 'textarea', 'phone', 'url'].includes(selectedField.type) && (
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div className="space-y-1">
+                                        <Label className="text-xs">Min Length</Label>
+                                        <Input
+                                            type="number"
+                                            placeholder="Min"
+                                            value={selectedField.validation?.minLength || ''}
+                                            onChange={(e) => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    minLength: e.target.value ? parseInt(e.target.value) : undefined
+                                                }
+                                            })}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <Label className="text-xs">Max Length</Label>
+                                        <Input
+                                            type="number"
+                                            placeholder="Max"
+                                            value={selectedField.validation?.maxLength || ''}
+                                            onChange={(e) => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    maxLength: e.target.value ? parseInt(e.target.value) : undefined
+                                                }
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Min/Max Value for number fields */}
+                            {selectedField.type === 'number' && (
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div className="space-y-1">
+                                        <Label className="text-xs">Min Value</Label>
+                                        <Input
+                                            type="number"
+                                            placeholder="Min"
+                                            value={selectedField.validation?.min || ''}
+                                            onChange={(e) => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    min: e.target.value ? parseInt(e.target.value) : undefined
+                                                }
+                                            })}
+                                        />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <Label className="text-xs">Max Value</Label>
+                                        <Input
+                                            type="number"
+                                            placeholder="Max"
+                                            value={selectedField.validation?.max || ''}
+                                            onChange={(e) => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    max: e.target.value ? parseInt(e.target.value) : undefined
+                                                }
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Pattern validation */}
+                            <div className="space-y-2">
+                                <Label className="text-xs">Regex Pattern</Label>
+                                <Input
+                                    placeholder="e.g., ^[A-Za-z]+$ for letters only"
+                                    value={selectedField.validation?.pattern || ''}
+                                    onChange={(e) => updateField(selectedField.id, {
+                                        validation: {
+                                            ...selectedField.validation,
+                                            pattern: e.target.value || undefined
+                                        }
+                                    })}
+                                />
+                            </div>
+
+                            {/* Custom error message */}
+                            <div className="space-y-2">
+                                <Label className="text-xs">Custom Error Message</Label>
+                                <Input
+                                    placeholder="Custom validation error message"
+                                    value={selectedField.validation?.customMessage || ''}
+                                    onChange={(e) => updateField(selectedField.id, {
+                                        validation: {
+                                            ...selectedField.validation,
+                                            customMessage: e.target.value || undefined
+                                        }
+                                    })}
+                                />
+                            </div>
+
+                            {/* Quick validation presets */}
+                            <div className="space-y-2">
+                                <Label className="text-xs">Quick Validation</Label>
+                                <div className="flex flex-wrap gap-1">
+                                    {selectedField.type === 'email' && (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    pattern: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+                                                    customMessage: 'Please enter a valid email address'
+                                                }
+                                            })}
+                                        >
+                                            Email Format
+                                        </Button>
+                                    )}
+                                    {selectedField.type === 'phone' && (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    pattern: '^[+]?[1-9]\\d{1,14}$',
+                                                    customMessage: 'Please enter a valid phone number'
+                                                }
+                                            })}
+                                        >
+                                            Phone Format
+                                        </Button>
+                                    )}
+                                    {selectedField.type === 'url' && (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => updateField(selectedField.id, {
+                                                validation: {
+                                                    ...selectedField.validation,
+                                                    pattern: '^https?:\\/\\/.+',
+                                                    customMessage: 'Please enter a valid URL'
+                                                }
+                                            })}
+                                        >
+                                            URL Format
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    <Separator />
+
                     {/* Styling Properties */}
                     <div className="space-y-2">
                         <Label className="flex items-center gap-2">
