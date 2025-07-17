@@ -14,12 +14,26 @@ interface FormPreviewModalProps {
 }
 
 /**
- * A simple component to render a preview of form fields.
- * These inputs are disabled as it's just a visual preview, not an active form.
+ * A component to render an interactive preview of form fields.
+ * These inputs are fully functional for testing the form.
  */
 const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+        const data: Record<string, any> = {};
+
+        // Collect form data
+        for (const [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        console.log('Form submitted with data:', data);
+        alert('Form submitted! Check console for data.');
+    };
+
     return (
-        <div className="space-y-4 p-4 border rounded-md bg-gray-50 max-h-[60vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-md bg-gray-50 max-h-[60vh] overflow-y-auto">
             {fields.length === 0 ? (
                 <p className="text-center text-gray-500 py-8">No fields to preview yet. Add some in the builder!</p>
             ) : (
@@ -46,10 +60,10 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                     </label>
                                     <input
                                         type={field.type}
+                                        name={field.id}
                                         placeholder={field.placeholder}
                                         className="mt-1 block w-full rounded-md shadow-sm"
                                         style={baseStyle}
-                                        disabled // Disabled for preview
                                     />
                                 </div>
                             );
@@ -60,11 +74,11 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                         {field.label} {field.required && <span className="text-red-500">*</span>}
                                     </label>
                                     <textarea
+                                        name={field.id}
                                         placeholder={field.placeholder}
                                         rows={3}
                                         className="mt-1 block w-full rounded-md shadow-sm"
                                         style={baseStyle}
-                                        disabled // Disabled for preview
                                     ></textarea>
                                 </div>
                             );
@@ -75,9 +89,9 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                         {field.label} {field.required && <span className="text-red-500">*</span>}
                                     </label>
                                     <select
+                                        name={field.id}
                                         className="mt-1 block w-full rounded-md shadow-sm"
                                         style={baseStyle}
-                                        disabled // Disabled for preview
                                     >
                                         <option value="">{field.placeholder || "Select an option"}</option>
                                         {field.options?.map((option, idx) => (
@@ -89,7 +103,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                         case 'checkbox':
                             return (
                                 <div key={field.id} className="mb-3 flex items-center">
-                                    <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded" disabled />
+                                    <input type="checkbox" name={field.id} className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
                                     <label className="ml-2 block text-sm text-gray-900">{field.label}</label>
                                 </div>
                             );
@@ -102,7 +116,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                     <div className="space-y-2">
                                         {field.options?.map((option, idx) => (
                                             <div key={idx} className="flex items-center">
-                                                <input type="radio" name={field.id} className="h-4 w-4 text-blue-600 border-gray-300" disabled />
+                                                <input type="radio" name={field.id} value={option} className="h-4 w-4 text-blue-600 border-gray-300" />
                                                 <label className="ml-2 block text-sm text-gray-900">{option}</label>
                                             </div>
                                         ))}
@@ -113,7 +127,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                             return (
                                 <button
                                     key={field.id}
-                                    type="button" // Use type="button" to prevent form submission in preview
+                                    type="submit" // Now it's a real submit button
                                     className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md"
                                     style={{
                                         borderRadius: field.styling?.borderRadius || 6,
@@ -123,7 +137,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                                         fontSize: field.styling?.fontSize || 16,
                                         padding: field.styling?.padding || 12,
                                     }}
-                                    disabled // Disabled for preview
+
                                 >
                                     {field.label}
                                 </button>
@@ -137,7 +151,7 @@ const SimplePreviewRenderer: React.FC<{ fields: FormField[] }> = ({ fields }) =>
                     }
                 })
             )}
-        </div>
+        </form>
     );
 };
 

@@ -109,7 +109,6 @@ export default function FormBuilderPage() {
         );
     }
 
-    // No 'form not found' state for MVP as 'form' is always initialized.
 
     return (
         <div className="space-y-6 p-4"> {/* Some padding to the main container */}
