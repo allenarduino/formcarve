@@ -268,7 +268,7 @@ const FormPreviewModal: React.FC<FormPreviewModalProps> = ({ isOpen, onClose, fi
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
                 <DialogHeader>
-                    <DialogTitle>Form Preview: {formName}</DialogTitle>
+                    <DialogTitle>{formName}</DialogTitle>
                 </DialogHeader>
                 <div className="flex-1 overflow-hidden">
                     <SimplePreviewRenderer fields={fields} />

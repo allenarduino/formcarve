@@ -2,13 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 // Icons for the UI
-import { ArrowLeft, Save, Eye, ExternalLink, Code, Download } from "lucide-react";
+import { ArrowLeft, Eye, Download } from "lucide-react";
 import { toast } from "sonner";
 import FormBuilder from "@/components/forms/form-builder";
 import FormPreviewModal from "@/components/forms/form-preview-modal";
@@ -115,11 +111,7 @@ export default function FormBuilderPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <Button variant="ghost" size="sm" onClick={() => console.log("Back button clicked - no router in MVP")}>
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Back
-                    </Button>
-                    <div>
+                    <div className="p-4">
                         <h1 className="text-2xl font-bold">Form Builder</h1>
                         <p className="text-muted-foreground">{form.name}</p>
                     </div>

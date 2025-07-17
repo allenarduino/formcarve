@@ -14,10 +14,22 @@
     "forms",
     "form-builder",
     "schema-driven-forms",
-    "typescript"
+    "typescript",
+    "validation",
+    "dynamic-forms",
+    "json-schema",
+    "form-renderer"
   ],
   "author": "Allen Jones",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allenarduino/formcarve"
+  },
+  "homepage": "https://github.com/allenarduino/formcarve#readme",
+  "bugs": {
+    "url": "https://github.com/allenarduino/formcarve/issues"
+  },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
