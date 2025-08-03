@@ -7,8 +7,8 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "FormCarve Builder",
-  description: "A visual drag-and-drop form builder for React.",
+  title: "FormCarve - Build React Forms Without Writing Code",
+  description: "A full-cycle, monorepo-based solution designed to streamline React form development. Build forms visually, export as JSON, and render with a single component.",
 };
 
 export default function RootLayout({
