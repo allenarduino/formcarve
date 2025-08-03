@@ -16,19 +16,25 @@ export default function LandingPage() {
                             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">FC</span>
                             </div>
-                            <span className="font-bold text-xl text-gray-900">FormCarve</span>
+                            <span className="font-bold text-lg sm:text-xl text-gray-900">Formcarve</span>
                         </div>
-                        <div className="flex items-center space-x-4">
-                            <Link href="/builder" className="text-gray-600 hover:text-gray-900 transition-colors">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
+                            <Link href="/builder" className="text-gray-600 hover:text-gray-900 transition-colors text-sm sm:text-base">
                                 Builder
                             </Link>
-                            <Link href="https://github.com/allenarduino/formcarve" className="text-gray-600 hover:text-gray-900 transition-colors">
-                                <Github className="w-5 h-5" />
+                            <Link href="https://github.com/allenarduino/formcarve" className="text-gray-600 hover:text-gray-900 transition-colors p-1">
+                                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                             </Link>
-                            <Button asChild>
+                            <Button size="sm" className="hidden sm:inline-flex" asChild>
                                 <Link href="/builder">
                                     Try Builder
-                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2" />
+                                </Link>
+                            </Button>
+                            <Button size="sm" className="sm:hidden" asChild>
+                                <Link href="/builder">
+                                    Try
+                                    <ArrowRight className="w-3 h-3 ml-1" />
                                 </Link>
                             </Button>
                         </div>
