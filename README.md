@@ -8,13 +8,13 @@ A dynamic, schema-based form rendering engine for React applications. Design for
 
 ## Features
 
-- 🚀 **Schema-driven forms** - Define forms using JSON schemas
-- ✅ **Built-in validation** - Comprehensive validation system with custom messages
-- 🎨 **Customizable styling** - Style your forms with custom CSS properties
-- 📱 **Responsive design** - Works on all screen sizes
-- 🔧 **TypeScript support** - Full TypeScript definitions included
-- 🎯 **Multiple field types** - Text, email, textarea, select, checkbox, radio, number, date, phone, URL
-- ⚡ **Lightweight** - No heavy dependencies
+- **Schema-driven forms** - Define forms using JSON schemas
+- **Built-in validation** - Comprehensive validation system with custom messages
+- **Customizable styling** - Style your forms with custom CSS properties
+- **Responsive design** - Works on all screen sizes
+- **TypeScript support** - Full TypeScript definitions included
+- **Multiple field types** - Text, email, textarea, select, checkbox, radio, number, date, phone, URL
+- **Lightweight** - No heavy dependencies
 
 ## Installation
 
