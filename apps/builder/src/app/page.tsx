@@ -339,7 +339,6 @@ function MyForm() {
                             <ul className="space-y-2 text-gray-400">
                                 <li><Link href="/builder" className="hover:text-white transition-colors">Builder</Link></li>
                                 <li><Link href="https://www.npmjs.com/package/@jonesstack/react-form-engine" className="hover:text-white transition-colors">Package</Link></li>
-                                <li><Link href="#" className="hover:text-white transition-colors">Documentation</Link></li>
                             </ul>
                         </div>
 
@@ -347,17 +346,6 @@ function MyForm() {
                             <h3 className="font-semibold mb-4">Community</h3>
                             <ul className="space-y-2 text-gray-400">
                                 <li><Link href="https://github.com/allenarduino/formcarve" className="hover:text-white transition-colors">GitHub</Link></li>
-                                <li><Link href="#" className="hover:text-white transition-colors">Discord</Link></li>
-                                <li><Link href="#" className="hover:text-white transition-colors">Twitter</Link></li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h3 className="font-semibold mb-4">Resources</h3>
-                            <ul className="space-y-2 text-gray-400">
-                                <li><Link href="#" className="hover:text-white transition-colors">Blog</Link></li>
-                                <li><Link href="#" className="hover:text-white transition-colors">Examples</Link></li>
-                                <li><Link href="#" className="hover:text-white transition-colors">Support</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -368,10 +356,6 @@ function MyForm() {
                         <p className="text-gray-400 text-sm">
                             © 2024 FormCarve. Built with ❤️ by Allen Jones for the React community.
                         </p>
-                        <div className="flex space-x-6 mt-4 md:mt-0">
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Privacy</Link>
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Terms</Link>
-                        </div>
                     </div>
                 </div>
             </footer>
