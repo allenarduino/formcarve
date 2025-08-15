@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import {
-    Plus, GripVertical, Trash2, Type, Mail, MessageSquare, Hash, Calendar, CheckSquare, List, Star, Image, FileText, Phone, Globe, MapPin, CreditCard, Settings, Palette
+    Plus, GripVertical, Trash2, Type, Mail, MessageSquare, Hash, Calendar, CheckSquare, List, Star, Image, FileText, Phone, Globe, MapPin, CreditCard, Settings, Palette, Smartphone, Monitor
 } from "lucide-react";
 
 import { FormField } from "@jonesstack/react-form-engine";
@@ -72,6 +72,7 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
     const [fields, setFields] = useState<FormField[]>(getInitialFields());
     const [selectedField, setSelectedField] = useState<FormField | null>(null);
     const [showFieldTypes, setShowFieldTypes] = useState(false);
+    const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
     const isInitialMount = useRef(true);
 
     // Update internal fields state when initialFields prop changes
@@ -749,14 +750,41 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
                         <CardTitle>Form Info</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-2">
-                            <div className="flex justify-between">
-                                <span className="text-sm text-muted-foreground">Total Fields:</span>
-                                <Badge variant="secondary">{fields.length}</Badge>
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <div className="flex justify-between">
+                                    <span className="text-sm text-muted-foreground">Total Fields:</span>
+                                    <Badge variant="secondary">{fields.length}</Badge>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-sm text-muted-foreground">Required Fields:</span>
+                                    <Badge variant="secondary">{fields.filter(f => f.required).length}</Badge>
+                                </div>
                             </div>
-                            <div className="flex justify-between">
-                                <span className="text-sm text-muted-foreground">Required Fields:</span>
-                                <Badge variant="secondary">{fields.filter(f => f.required).length}</Badge>
+
+                            <Separator />
+
+                            <div className="space-y-2">
+                                <div className="flex gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setPreviewMode('desktop')}
+                                        className="flex-1"
+                                    >
+                                        <Monitor className="h-3 w-3 mr-1" />
+                                        Desktop
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setPreviewMode('mobile')}
+                                        className="flex-1"
+                                    >
+                                        <Smartphone className="h-3 w-3 mr-1" />
+                                        Mobile
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </CardContent>
@@ -765,72 +793,113 @@ export default function FormBuilder({ formId, initialFields = [], onSave, onFiel
 
             {/* Center Panel - Form Canvas */}
             <div className="flex-1">
+                <div className="mb-4 p-3 bg-white rounded-lg border shadow-sm">
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="flex items-center gap-2">
+                            <div className="flex gap-2">
+                                <Button
+                                    variant={previewMode === 'desktop' ? 'default' : 'outline'}
+                                    size="sm"
+                                    onClick={() => setPreviewMode('desktop')}
+                                    className="flex items-center gap-2"
+                                >
+                                    <Monitor className="h-4 w-4" />
+                                    Desktop
+                                </Button>
+                                <Button
+                                    variant={previewMode === 'mobile' ? 'default' : 'outline'}
+                                    size="sm"
+                                    onClick={() => setPreviewMode('mobile')}
+                                    className="flex items-center gap-2"
+                                >
+                                    <Smartphone className="h-4 w-4" />
+                                    Mobile
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="text-sm text-gray-600">
+                            {previewMode === 'mobile' ? 'Mobile View (375px)' : 'Desktop View (Full Width)'}
+                        </div>
+                    </div>
+                </div>
+
                 <Card className="h-full">
                     <CardHeader>
-                        <CardTitle>Form Canvas</CardTitle> {/* Changed from Form Builder */}
-                        <p className="text-sm text-muted-foreground">
-                            Drag and drop fields to reorder them. Click on a field to edit its properties.
-                        </p>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <CardTitle>Form Canvas</CardTitle>
+                                <p className="text-sm text-muted-foreground">
+                                    Drag and drop fields to reorder them. Click on a field to edit its properties.
+                                </p>
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <DragDropContext onDragEnd={handleDragEnd}>
-                            <Droppable droppableId="form-fields">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        className="space-y-4 min-h-[400px] p-4 border-2 border-dashed border-gray-200 rounded-lg"
-                                    >
-                                        {fields.length === 0 ? (
-                                            <div className="text-center py-12">
-                                                <Plus className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                                                <p className="text-gray-500">No fields added yet. Click "Add Field Type" to get started.</p>
-                                            </div>
-                                        ) : (
-                                            fields.map((field, index) => (
-                                                <Draggable key={field.id} draggableId={field.id} index={index}>
-                                                    {(provided, snapshot) => (
-                                                        <div
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            className={`p-4 border rounded-lg cursor-pointer transition-all ${selectedField?.id === field.id
-                                                                ? 'border-blue-500 bg-blue-50'
-                                                                : 'border-gray-200 hover:border-gray-300'
-                                                                } ${snapshot.isDragging ? 'shadow-lg' : ''}`}
-                                                            onClick={() => setSelectedField(field)}
-                                                        >
-                                                            <div className="flex items-center justify-between mb-3">
-                                                                <div className="flex items-center gap-2">
-                                                                    <div {...provided.dragHandleProps}>
-                                                                        <GripVertical className="h-4 w-4 text-gray-400" />
+
+                        {/* Form Canvas with Responsive Preview */}
+                        <div
+                            className={`mx-auto transition-all duration-300 ${previewMode === 'mobile' ? 'max-w-[375px]' : 'w-full'
+                                }`}
+                        >
+                            <DragDropContext onDragEnd={handleDragEnd}>
+                                <Droppable droppableId="form-fields">
+                                    {(provided) => (
+                                        <div
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}
+                                            className="space-y-4 min-h-[400px] p-4 border-2 border-dashed border-gray-200 rounded-lg"
+                                        >
+                                            {fields.length === 0 ? (
+                                                <div className="text-center py-12">
+                                                    <Plus className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                                                    <p className="text-gray-500">No fields added yet. Click "Add Field Type" to get started.</p>
+                                                </div>
+                                            ) : (
+                                                fields.map((field, index) => (
+                                                    <Draggable key={field.id} draggableId={field.id} index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                className={`p-4 border rounded-lg cursor-pointer transition-all ${selectedField?.id === field.id
+                                                                    ? 'border-blue-500 bg-blue-50'
+                                                                    : 'border-gray-200 hover:border-gray-300'
+                                                                    } ${snapshot.isDragging ? 'shadow-lg' : ''}`}
+                                                                onClick={() => setSelectedField(field)}
+                                                            >
+                                                                <div className="flex items-center justify-between mb-3">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div {...provided.dragHandleProps}>
+                                                                            <GripVertical className="h-4 w-4 text-gray-400" />
+                                                                        </div>
+                                                                        <Badge variant="outline">{field.type}</Badge>
+                                                                        {field.required && (
+                                                                            <Badge variant="destructive" className="text-xs">Required</Badge>
+                                                                        )}
                                                                     </div>
-                                                                    <Badge variant="outline">{field.type}</Badge>
-                                                                    {field.required && (
-                                                                        <Badge variant="destructive" className="text-xs">Required</Badge>
-                                                                    )}
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation(); // Prevent selecting the field when deleting
+                                                                            removeField(field.id);
+                                                                        }}
+                                                                    >
+                                                                        <Trash2 className="h-4 w-4" />
+                                                                    </Button>
                                                                 </div>
-                                                                <Button
-                                                                    variant="ghost"
-                                                                    size="sm"
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation(); // Prevent selecting the field when deleting
-                                                                        removeField(field.id);
-                                                                    }}
-                                                                >
-                                                                    <Trash2 className="h-4 w-4" />
-                                                                </Button>
+                                                                {renderFieldPreview(field)}
                                                             </div>
-                                                            {renderFieldPreview(field)}
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            ))
-                                        )}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
+                                                        )}
+                                                    </Draggable>
+                                                ))
+                                            )}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </DragDropContext>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
