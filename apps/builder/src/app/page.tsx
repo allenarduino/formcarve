@@ -14,25 +14,22 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">FC</span>
-                            </div>
-                            <span className="font-bold text-lg sm:text-xl text-gray-900">Formcarve</span>
+                            <span className="font-bold text-lg sm:text-xl text-black">Formcarve</span>
                         </div>
                         <div className="flex items-center space-x-2 sm:space-x-4">
-                            <Link href="/builder" className="text-gray-600 hover:text-gray-900 transition-colors text-sm sm:text-base">
+                            <Link href="/builder" className="text-black/80 hover:text-black transition-colors text-sm sm:text-base">
                                 Builder
                             </Link>
-                            <Link href="https://github.com/allenarduino/formcarve" className="text-gray-600 hover:text-gray-900 transition-colors p-1">
+                            <Link href="https://github.com/allenarduino/formcarve" className="text-black hover:text-black/80 transition-colors p-1">
                                 <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                             </Link>
-                            <Button size="sm" className="hidden sm:inline-flex bg-gray-900 hover:bg-gray-800" asChild>
+                            <Button size="sm" className="hidden sm:inline-flex bg-black hover:bg-black/90" asChild>
                                 <Link href="/builder">
                                     Try Builder
                                     <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2" />
                                 </Link>
                             </Button>
-                            <Button size="sm" className="sm:hidden bg-gray-900 hover:bg-gray-800" asChild>
+                            <Button size="sm" className="sm:hidden bg-black hover:bg-black/90" asChild>
                                 <Link href="/builder">
                                     Try
                                     <ArrowRight className="w-3 h-3 ml-1" />
@@ -50,7 +47,7 @@ export default function LandingPage() {
 
                         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                             Build React Forms
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-gray-900">
+                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black">
                                 Without Writing Code
                             </span>
                         </h1>
@@ -60,13 +57,13 @@ export default function LandingPage() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <Button size="lg" asChild className="bg-gray-900 hover:bg-gray-800">
+                            <Button size="lg" asChild className="bg-black hover:bg-black/90">
                                 <Link href="/builder">
                                     <Play className="w-5 h-5 mr-2" />
                                     Try the Builder
                                 </Link>
                             </Button>
-                            <Button size="lg" variant="outline" asChild className="border-gray-300 text-gray-700 hover:bg-gray-50">
+                            <Button size="lg" variant="outline" asChild className="border-black/30 text-black hover:bg-black/5">
                                 <Link href="https://www.npmjs.com/package/@jonesstack/react-form-engine">
                                     <Download className="w-5 h-5 mr-2" />
                                     Install Package
@@ -92,8 +89,8 @@ export default function LandingPage() {
                     <div className="grid md:grid-cols-3 gap-8">
                         <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
                             <CardHeader>
-                                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                                    <Palette className="w-6 h-6 text-gray-700" />
+                                <div className="w-12 h-12 bg-black/10 rounded-lg flex items-center justify-center mb-4">
+                                    <Palette className="w-6 h-6 text-black" />
                                 </div>
                                 <CardTitle className="text-xl">Visual Builder</CardTitle>
                                 <CardDescription className="text-base">
@@ -104,8 +101,8 @@ export default function LandingPage() {
 
                         <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
                             <CardHeader>
-                                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                                    <Code className="w-6 h-6 text-blue-600" />
+                                <div className="w-12 h-12 bg-black/10 rounded-lg flex items-center justify-center mb-4">
+                                    <Code className="w-6 h-6 text-black" />
                                 </div>
                                 <CardTitle className="text-xl">JSON Schema</CardTitle>
                                 <CardDescription className="text-base">
@@ -116,8 +113,8 @@ export default function LandingPage() {
 
                         <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white">
                             <CardHeader>
-                                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                                    <Zap className="w-6 h-6 text-green-600" />
+                                <div className="w-12 h-12 bg-black/10 rounded-lg flex items-center justify-center mb-4">
+                                    <Zap className="w-6 h-6 text-black" />
                                 </div>
                                 <CardTitle className="text-xl">React Component</CardTitle>
                                 <CardDescription className="text-base">
@@ -143,7 +140,7 @@ export default function LandingPage() {
 
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
                                 <span className="text-white font-bold text-xl">1</span>
                             </div>
                             <h3 className="text-xl font-semibold text-gray-900 mb-3">Build Visually</h3>
@@ -153,7 +150,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
                                 <span className="text-white font-bold text-xl">2</span>
                             </div>
                             <h3 className="text-xl font-semibold text-gray-900 mb-3">Export JSON</h3>
@@ -163,7 +160,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
                                 <span className="text-white font-bold text-xl">3</span>
                             </div>
                             <h3 className="text-xl font-semibold text-gray-900 mb-3">Render Anywhere</h3>
@@ -187,7 +184,7 @@ export default function LandingPage() {
                         </p>
                     </div>
 
-                    <div className="bg-gray-900 rounded-xl p-8 shadow-2xl">
+                    <div className="bg-black rounded-xl p-8 shadow-2xl">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-2">
                                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -289,7 +286,7 @@ function MyForm() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-gray-900">
+            <section className="py-20 bg-black">
                 <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                         Ready to Build Better Forms?
@@ -298,13 +295,13 @@ function MyForm() {
                         Join developers who are already building forms faster with FormCarve.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <Button size="lg" variant="secondary" asChild className="bg-white text-gray-900 hover:bg-gray-100">
+                        <Button size="lg" variant="secondary" asChild className="bg-white text-black hover:bg-gray-100">
                             <Link href="/builder">
                                 <Play className="w-5 h-5 mr-2" />
                                 Try the Builder
                             </Link>
                         </Button>
-                        <Button size="lg" variant="outline" asChild className="border-white text-white bg-white text-gray-900">
+                        <Button size="lg" variant="outline" asChild className="border-white text-white bg-white text-black">
                             <Link href="https://www.npmjs.com/package/@jonesstack/react-form-engine">
                                 <Download className="w-5 h-5 mr-2" />
                                 Install Package
@@ -315,14 +312,11 @@ function MyForm() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12">
+            <footer className="bg-black text-white py-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-4 gap-8">
                         <div>
                             <div className="flex items-center space-x-2 mb-4">
-                                <div className="w-8 h-8 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg flex items-center justify-center">
-                                    <span className="text-white font-bold text-sm">FC</span>
-                                </div>
                                 <span className="font-bold text-xl">FormCarve</span>
                             </div>
                             <p className="text-gray-400">
@@ -346,7 +340,7 @@ function MyForm() {
                         </div>
                     </div>
 
-                    <Separator className="my-8 bg-gray-800" />
+                    <Separator className="my-8 bg-white/20" />
 
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <p className="text-gray-400 text-sm">
