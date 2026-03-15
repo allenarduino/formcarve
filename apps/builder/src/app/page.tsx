@@ -47,10 +47,6 @@ export default function LandingPage() {
             <section className="relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
                     <div className="text-center">
-                        <Badge variant="secondary" className="mb-6 bg-gray-100 text-gray-700 border-gray-200">
-                            <Star className="w-3 h-3 mr-1" />
-                            New Introducing Form Builder
-                        </Badge>
 
                         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                             Build React Forms
