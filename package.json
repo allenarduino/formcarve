@@ -12,8 +12,8 @@
   "packageManager": "pnpm@10.13.1",
   "pnpm": {
     "overrides": {
-      "next": "16.0.7",
-      "eslint-config-next": "16.0.7"
+      "next": "16.0.10",
+      "eslint-config-next": "16.0.10"
     }
   }
 }

@@ -344,7 +344,7 @@ function MyForm() {
 
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <p className="text-gray-400 text-sm">
-                            © 2024 FormCarve. Built with ❤️ by Allen Jones for the React community.
+                            © 2026 FormCarve. Built with ❤️ by Allen Jones for the React community.
                         </p>
                     </div>
                 </div>
